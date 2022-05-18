@@ -3,15 +3,18 @@ import ReactDOM from 'react-dom/client';
 import {
   BrowserRouter, Route, Routes, useLocation, Navigate,
 } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import { has } from 'lodash';
 import Home from './Home.jsx';
 import Login from './Login.jsx';
 import Navigation from './Navigation.jsx';
 import NoMatch from './NoMatch.jsx';
 import AuthContext from '../contexts/index.jsx';
 import useAuth from '../hooks/index.jsx';
+import store from '../slices/index.js';
 
 function AuthProvider({ children }) {
-  const [loggedIn, setLoggedIn] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(has(localStorage, 'userId'));
 
   const logIn = () => setLoggedIn(true);
   const logOut = () => {
@@ -64,7 +67,9 @@ export default (container) => {
 
   return root.render(
     <BrowserRouter>
-      <App />
+      <Provider store={store}>
+        <App />
+      </Provider>
     </BrowserRouter>,
   );
 };
