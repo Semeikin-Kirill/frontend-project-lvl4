@@ -1,11 +1,12 @@
 import React from 'react';
 import { Col } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
+import { selectorChannels } from '../slices/channelsSlice.js';
 import Channel from './Channel.jsx';
 
 function Channels() {
-  const { currentChannelId, entities } = useSelector((state) => state.channels);
-  const list = Object.values(entities)
+  const { currentChannelId, channels } = useSelector(selectorChannels);
+  const list = channels
     .map(({ name, id, removable }) => (
       <Channel
         key={id}

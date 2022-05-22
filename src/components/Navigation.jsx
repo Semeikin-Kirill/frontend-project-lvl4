@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, Container, Navbar } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import useAuth from '../hooks/index.jsx';
+import { useAuth } from '../hooks/index.jsx';
 
 function Navigation() {
   const { loggedIn, logOut } = useAuth();

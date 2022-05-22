@@ -1,13 +1,13 @@
 import React from 'react';
 import { Col } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
-import { selectorsChannels } from '../slices/channelsSlice.js';
+import { selectorChannels } from '../slices/channelsSlice.js';
 import FormMessage from './FormMessage.jsx';
 import MessagesBox from './MessagesBox.jsx';
 
 function Messages() {
-  const { currentChannelId } = useSelector((state) => state.channels);
-  const cannel = useSelector((state) => selectorsChannels.selectById(state, currentChannelId));
+  const { currentChannelId, channels } = useSelector(selectorChannels);
+  const cannel = channels.find(({ id }) => id === currentChannelId);
   return (
     <Col className="p-0 h-100">
       <div className="d-flex flex-column h-100">

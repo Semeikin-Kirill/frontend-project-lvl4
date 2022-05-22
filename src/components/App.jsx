@@ -9,8 +9,8 @@ import Home from './Home.jsx';
 import Login from './Login.jsx';
 import Navigation from './Navigation.jsx';
 import NoMatch from './NoMatch.jsx';
-import AuthContext from '../contexts/index.jsx';
-import useAuth from '../hooks/index.jsx';
+import { AuthContext } from '../contexts/index.jsx';
+import { useAuth } from '../hooks/index.jsx';
 import store from '../slices/index.js';
 
 function AuthProvider({ children }) {

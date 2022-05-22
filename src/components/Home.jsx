@@ -1,9 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Container, Row } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
 import { fetchData } from '../slices/channelsSlice.js';
 import Channels from './Channels.jsx';
 import Messages from './Messages.jsx';
+import { SocketContext } from '../contexts/index.jsx';
+import socketClient from '../api/index.js';
 
 const getAuthHeader = () => {
   const userId = JSON.parse(localStorage.getItem('userId'));
@@ -16,18 +18,24 @@ const getAuthHeader = () => {
 };
 
 function Home() {
+  const [socket, setSocket] = useState(null);
   const dispatch = useDispatch();
   useEffect(() => {
+    setSocket(socketClient());
     dispatch(fetchData({ headers: getAuthHeader() }));
   }, []);
 
+  socket?.getMessage(console.log);
+
   return (
-    <Container className="h-100 my-4 overflow-hidden rounded shadow">
-      <Row className="h-100 bg-white flex-md-row">
-        <Channels />
-        <Messages />
-      </Row>
-    </Container>
+    <SocketContext.Provider value={socket}>
+      <Container className="h-100 my-4 overflow-hidden rounded shadow">
+        <Row className="h-100 bg-white flex-md-row">
+          <Channels />
+          <Messages />
+        </Row>
+      </Container>
+    </SocketContext.Provider>
   );
 }
 

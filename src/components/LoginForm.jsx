@@ -7,7 +7,7 @@ import {
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Feedback from 'react-bootstrap/Feedback';
-import useAuth from '../hooks/index.jsx';
+import { useAuth } from '../hooks/index.jsx';
 
 const loginPatch = '/api/v1/login';
 
