@@ -12,6 +12,7 @@ import NoMatch from './NoMatch.jsx';
 import { AuthContext } from '../contexts/index.jsx';
 import { useAuth } from '../hooks/index.jsx';
 import store from '../slices/index.js';
+import AddChannel from './modals/AddChannel.jsx';
 
 function AuthProvider({ children }) {
   const [loggedIn, setLoggedIn] = useState(has(localStorage, 'userId'));
