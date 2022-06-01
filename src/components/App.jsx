@@ -12,7 +12,7 @@ import NoMatch from './NoMatch.jsx';
 import { AuthContext } from '../contexts/index.jsx';
 import { useAuth } from '../hooks/index.jsx';
 import store from '../slices/index.js';
-import AddChannel from './modals/AddChannel.jsx';
+import Signup from './Signup.jsx';
 
 function AuthProvider({ children }) {
   const [loggedIn, setLoggedIn] = useState(has(localStorage, 'userId'));
@@ -55,6 +55,7 @@ function App() {
           )}
           />
           <Route path="login" element={<Login />} />
+          <Route path="signup" element={<Signup />} />
           <Route path="*" element={<NoMatch />} />
         </Routes>
       </div>
