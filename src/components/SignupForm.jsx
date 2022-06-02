@@ -39,6 +39,7 @@ function SignupForm() {
         }).catch((err) => {
           if (err.isAxiosError && err.response.status === 409) {
             actions.setFieldError('confirmPassword', 'Такой пользователь уже существует');
+            inputEl.current.select();
             return;
           }
           throw err;

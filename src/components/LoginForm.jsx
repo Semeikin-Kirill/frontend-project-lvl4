@@ -7,6 +7,7 @@ import {
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Feedback from 'react-bootstrap/Feedback';
+import { useTranslation } from 'react-i18next';
 import { useAuth } from '../hooks/index.jsx';
 
 const loginPatch = '/api/v1/login';
@@ -16,6 +17,7 @@ function LoginForm() {
   const [authFailed, setAuthFailed] = useState(false);
   const { logIn } = useAuth();
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   useEffect(() => {
     inputEl.current.focus();
@@ -49,17 +51,17 @@ function LoginForm() {
       }}
     >
       <Form className="col-12 col-md-6 mt-3 mt-mb-0">
-        <h1 className="text-center mb-4">Войти</h1>
+        <h1 className="text-center mb-4">{t('forms.login.header')}</h1>
         <FormFloating className="mb-3">
-          <FormControl isInvalid={authFailed} id="username" autoComplete="username" placeholder="Ваш ник" required name="username" type="text" as={Field} innerRef={inputEl} />
-          <FormLabel htmlFor="username">Ваш ник</FormLabel>
+          <FormControl isInvalid={authFailed} id="username" autoComplete="username" placeholder={t('forms.login.username')} required name="username" type="text" as={Field} innerRef={inputEl} />
+          <FormLabel htmlFor="username">{t('forms.login.username')}</FormLabel>
         </FormFloating>
         <FormFloating className="mb-4">
-          <FormControl isInvalid={authFailed} id="password" autoComplete="current-password" placeholder="Пароль" required name="password" type="password" as={Field} />
-          <FormLabel htmlFor="password" className="form-label">Пароль</FormLabel>
-          <Feedback type="invalid" tooltip={authFailed}>Неверные имя пользователя или пароль</Feedback>
+          <FormControl isInvalid={authFailed} id="password" autoComplete="current-password" placeholder={t('forms.login.password')} required name="password" type="password" as={Field} />
+          <FormLabel htmlFor="password" className="form-label">{t('forms.login.password')}</FormLabel>
+          <Feedback type="invalid" tooltip={authFailed}>{t('errors.login.incorrect')}</Feedback>
         </FormFloating>
-        <Button variant="outline-primary" className="w-100" type="submit">Войти</Button>
+        <Button variant="outline-primary" className="w-100" type="submit">{t('buttons.login')}</Button>
       </Form>
     </Formik>
   );

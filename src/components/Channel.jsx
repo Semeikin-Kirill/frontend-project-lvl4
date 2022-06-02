@@ -2,6 +2,7 @@ import React from 'react';
 import { ButtonGroup, Dropdown } from 'react-bootstrap';
 import cn from 'classnames';
 import { useDispatch } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import { currentСhannelChanged } from '../slices/channelsSlice.js';
 import { shownModal } from '../slices/modalSlice.js';
 
@@ -9,6 +10,7 @@ function Channel({
   name, id, removable, currentChannelId,
 }) {
   const dispatch = useDispatch();
+  const { t } = useTranslation();
 
   const changedCurrentChannel = (channelId) => () => dispatch(currentСhannelChanged(channelId));
 
@@ -26,11 +28,11 @@ function Channel({
             {name}
           </button>
           <Dropdown.Toggle className="flex-grow-0" split variant={currentChannelId === id ? 'secondary' : ''}>
-            <span className="visually-hidden">Управление каналом</span>
+            <span className="visually-hidden">{t('channelManagement')}</span>
           </Dropdown.Toggle>
           <Dropdown.Menu>
-            <Dropdown.Item href="#" onClick={clickRemove}>Удалить</Dropdown.Item>
-            <Dropdown.Item href="#" onClick={clickRename}>Переименовать</Dropdown.Item>
+            <Dropdown.Item href="#" onClick={clickRemove}>{t('delete')}</Dropdown.Item>
+            <Dropdown.Item href="#" onClick={clickRename}>{t('renname')}</Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
       </li>

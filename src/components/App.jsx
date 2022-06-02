@@ -5,6 +5,7 @@ import {
 } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { has } from 'lodash';
+import { I18nextProvider } from 'react-i18next';
 import Home from './Home.jsx';
 import Login from './Login.jsx';
 import Navigation from './Navigation.jsx';
@@ -13,6 +14,7 @@ import { AuthContext } from '../contexts/index.jsx';
 import { useAuth } from '../hooks/index.jsx';
 import store from '../slices/index.js';
 import Signup from './Signup.jsx';
+import i18n from '../i18n.js';
 
 function AuthProvider({ children }) {
   const [loggedIn, setLoggedIn] = useState(has(localStorage, 'userId'));
@@ -70,7 +72,9 @@ export default (container) => {
   return root.render(
     <BrowserRouter>
       <Provider store={store}>
-        <App />
+        <I18nextProvider i18n={i18n}>
+          <App />
+        </I18nextProvider>
       </Provider>
     </BrowserRouter>,
   );
