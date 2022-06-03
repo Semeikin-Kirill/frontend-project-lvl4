@@ -6,6 +6,7 @@ import {
 import * as Yup from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 import { useSocket } from '../../hooks/index.jsx';
 import { closedModal, selectorModal } from '../../slices/modalSlice.js';
 
@@ -39,6 +40,7 @@ function RenameChannel() {
           onSubmit={({ name }) => {
             socket.renameChannel({ name, id: extra.id });
             handleClose();
+            toast.success(t('renameChannel'));
           }}
         >
           {({ errors }) => (

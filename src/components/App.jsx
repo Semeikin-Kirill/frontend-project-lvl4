@@ -6,6 +6,7 @@ import {
 import { Provider } from 'react-redux';
 import { has } from 'lodash';
 import { I18nextProvider } from 'react-i18next';
+import { ToastContainer } from 'react-toastify';
 import Home from './Home.jsx';
 import Login from './Login.jsx';
 import Navigation from './Navigation.jsx';
@@ -15,6 +16,7 @@ import { useAuth } from '../hooks/index.jsx';
 import store from '../slices/index.js';
 import Signup from './Signup.jsx';
 import i18n from '../i18n.js';
+import 'react-toastify/dist/ReactToastify.css';
 
 function AuthProvider({ children }) {
   const [loggedIn, setLoggedIn] = useState(has(localStorage, 'userId'));
@@ -61,7 +63,7 @@ function App() {
           <Route path="*" element={<NoMatch />} />
         </Routes>
       </div>
-      <div className="Toastify" />
+      <ToastContainer />
     </AuthProvider>
   );
 }

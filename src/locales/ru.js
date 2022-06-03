@@ -14,6 +14,9 @@ export default {
     renname: 'Переименовать',
     delete: 'Удалить',
     messages: 'сообщения',
+    renameChannel: 'Канал переименован',
+    createChannel: 'Канал создан',
+    deleteChannel: 'Канал удален',
     forms: {
       login: {
         imgLogin: 'Войти',
