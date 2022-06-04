@@ -7,6 +7,7 @@ import {
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/index.jsx';
+import routes from '../routes.js';
 
 function SignupForm() {
   const inputEl = useRef();
@@ -32,7 +33,7 @@ function SignupForm() {
         password: Yup.string().min(6, 'Не менее 6 символов').required('Обязательное поле'),
       })}
       onSubmit={({ username, password }, actions) => {
-        axios.post('/api/v1/signup', { username, password }).then(({ data }) => {
+        axios.post(routes.sendSignup(), { username, password }).then(({ data }) => {
           localStorage.setItem('userId', JSON.stringify(data));
           logIn();
           navigate('/');

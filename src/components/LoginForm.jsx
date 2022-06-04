@@ -9,8 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import Feedback from 'react-bootstrap/Feedback';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../hooks/index.jsx';
-
-const loginPatch = '/api/v1/login';
+import routes from '../routes.js';
 
 function LoginForm() {
   const inputEl = useRef(null);
@@ -35,7 +34,7 @@ function LoginForm() {
       })}
       onSubmit={(values) => {
         setAuthFailed(false);
-        axios.post(loginPatch, values)
+        axios.post(routes.sendLogin(), values)
           .then(({ data }) => {
             localStorage.setItem('userId', JSON.stringify(data));
             logIn();
