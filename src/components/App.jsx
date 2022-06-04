@@ -7,6 +7,7 @@ import { Provider } from 'react-redux';
 import { has } from 'lodash';
 import { I18nextProvider } from 'react-i18next';
 import { ToastContainer } from 'react-toastify';
+import { Provider as ProviderRollbar, ErrorBoundary } from '@rollbar/react';
 import Home from './Home.jsx';
 import Login from './Login.jsx';
 import Navigation from './Navigation.jsx';
@@ -17,6 +18,13 @@ import store from '../slices/index.js';
 import Signup from './Signup.jsx';
 import i18n from '../i18n.js';
 import 'react-toastify/dist/ReactToastify.css';
+
+const rollbarConfig = {
+  accessToken: 'c7e072a198ec4d7083a194eb7fe052f5',
+  payload: {
+    environment: 'production',
+  },
+};
 
 function AuthProvider({ children }) {
   const [loggedIn, setLoggedIn] = useState(has(localStorage, 'userId'));
@@ -72,12 +80,16 @@ export default (container) => {
   const root = ReactDOM.createRoot(container);
 
   return root.render(
-    <BrowserRouter>
-      <Provider store={store}>
-        <I18nextProvider i18n={i18n}>
-          <App />
-        </I18nextProvider>
-      </Provider>
-    </BrowserRouter>,
+    <ProviderRollbar config={rollbarConfig}>
+      <ErrorBoundary>
+        <BrowserRouter>
+          <Provider store={store}>
+            <I18nextProvider i18n={i18n}>
+              <App />
+            </I18nextProvider>
+          </Provider>
+        </BrowserRouter>
+      </ErrorBoundary>
+    </ProviderRollbar>,
   );
 };
