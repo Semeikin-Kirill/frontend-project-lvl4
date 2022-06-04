@@ -1,11 +1,10 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import { getDataUrl } from './routes.js';
 
 export const fetchData = createAsyncThunk(
   'data/fetchData',
-  (header) => axios.get(getDataUrl(), header).then((req) => req.data).catch(() => toast.error('Ошибка при загрузке данных')),
+  (header) => axios.get('/api/v1/data', header).then((req) => req.data).catch(() => toast.error('Ошибка при загрузке данных')),
 );
 
 const initialState = { currentChannelId: null, channels: [] };
