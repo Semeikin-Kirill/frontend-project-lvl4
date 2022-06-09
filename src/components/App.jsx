@@ -1,30 +1,18 @@
 import React, { useMemo, useState } from 'react';
-import ReactDOM from 'react-dom/client';
 import {
-  BrowserRouter, Route, Routes, useLocation, Navigate,
+  Route, Routes, useLocation, Navigate,
 } from 'react-router-dom';
-import { Provider } from 'react-redux';
 import { has } from 'lodash';
-import { I18nextProvider } from 'react-i18next';
 import { ToastContainer } from 'react-toastify';
-import { Provider as ProviderRollbar, ErrorBoundary } from '@rollbar/react';
 import Home from './Home.jsx';
 import Login from './Login.jsx';
 import Navigation from './Navigation.jsx';
 import NoMatch from './NoMatch.jsx';
 import { AuthContext } from '../contexts/index.jsx';
 import { useAuth } from '../hooks/index.jsx';
-import store from '../slices/index.js';
 import Signup from './Signup.jsx';
-import i18n from '../i18n.js';
 import 'react-toastify/dist/ReactToastify.css';
-
-const rollbarConfig = {
-  accessToken: 'c7e072a198ec4d7083a194eb7fe052f5',
-  payload: {
-    environment: 'production',
-  },
-};
+import routes from '../routes.js';
 
 function AuthProvider({ children }) {
   const [loggedIn, setLoggedIn] = useState(has(localStorage, 'userId'));
@@ -34,7 +22,18 @@ function AuthProvider({ children }) {
     localStorage.removeItem('userId');
     setLoggedIn(false);
   };
-  const login = useMemo(() => ({ loggedIn, logIn, logOut }), [loggedIn]);
+  const getAuthHeader = () => {
+    const userId = JSON.parse(localStorage.getItem('userId'));
+
+    if (userId && userId.token) {
+      return { Authorization: `Bearer ${userId.token}` };
+    }
+
+    return {};
+  };
+  const login = useMemo(() => ({
+    loggedIn, logIn, logOut, getAuthHeader,
+  }), [loggedIn]);
 
   return (
     <AuthContext.Provider value={login}>
@@ -48,7 +47,7 @@ function PrivateRoute({ children }) {
   const location = useLocation();
 
   return (
-    auth.loggedIn ? children : <Navigate to="/login" state={{ from: location }} />
+    auth.loggedIn ? children : <Navigate to={routes.login} state={{ from: location }} />
   );
 }
 
@@ -59,16 +58,16 @@ function App() {
         <Navigation />
         <Routes>
           <Route
-            path="/"
+            path={routes.home}
             element={(
               <PrivateRoute>
                 <Home />
               </PrivateRoute>
           )}
           />
-          <Route path="login" element={<Login />} />
-          <Route path="signup" element={<Signup />} />
-          <Route path="*" element={<NoMatch />} />
+          <Route path={routes.login} element={<Login />} />
+          <Route path={routes.signup} element={<Signup />} />
+          <Route path={routes.noMatch} element={<NoMatch />} />
         </Routes>
       </div>
       <ToastContainer />
@@ -76,20 +75,4 @@ function App() {
   );
 }
 
-export default (container) => {
-  const root = ReactDOM.createRoot(container);
-
-  return root.render(
-    <ProviderRollbar config={rollbarConfig}>
-      <ErrorBoundary>
-        <BrowserRouter>
-          <Provider store={store}>
-            <I18nextProvider i18n={i18n}>
-              <App />
-            </I18nextProvider>
-          </Provider>
-        </BrowserRouter>
-      </ErrorBoundary>
-    </ProviderRollbar>,
-  );
-};
+export default App;

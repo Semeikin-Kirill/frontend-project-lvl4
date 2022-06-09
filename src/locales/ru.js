@@ -2,6 +2,7 @@ export default {
   translation: {
     noMatch: 'Страница не найдена',
     linkHome: 'Но вы можете перейти <2>на главную страницу</2>',
+    noAccount: '<0>Нет аккаунта?</0> <1>Регистрация</1>',
     brand: 'Hexlet Chat',
     linkSingup: '',
     channels: 'Каналы',

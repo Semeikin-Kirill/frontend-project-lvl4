@@ -2,8 +2,9 @@ import React from 'react';
 import {
   Card, Col, Container, Image, Row,
 } from 'react-bootstrap';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
+import routes from '../routes.js';
 import LoginForm from './LoginForm.jsx';
 
 function Login() {
@@ -21,9 +22,10 @@ function Login() {
             </Card.Body>
             <Card.Footer className="p-4">
               <div className="text-center">
-                <span>Нет аккаунта?</span>
-&nbsp;
-                <Link to="/signup">Регистрация</Link>
+                <Trans i18nKey="noAccount">
+                  <span>Нет аккаунта?</span>
+                  <Link to={routes.signup}>Регистрация</Link>
+                </Trans>
               </div>
             </Card.Footer>
           </Card>

@@ -2,6 +2,7 @@ import React from 'react';
 import { Image } from 'react-bootstrap';
 import { Trans, useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
+import routes from '../routes.js';
 
 function NoMatch() {
   const { t } = useTranslation();
@@ -13,7 +14,7 @@ function NoMatch() {
         <Trans i18nKey="linkHome">
           Но вы можете перейти
           {' '}
-          <Link to="/">на главную страницу</Link>
+          <Link to={routes.home}>на главную страницу</Link>
         </Trans>
       </p>
     </div>

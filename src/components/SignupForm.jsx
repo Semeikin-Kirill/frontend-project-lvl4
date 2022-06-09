@@ -36,7 +36,7 @@ function SignupForm() {
         axios.post(routes.sendSignup(), { username, password }).then(({ data }) => {
           localStorage.setItem('userId', JSON.stringify(data));
           logIn();
-          navigate('/');
+          navigate(routes.home);
         }).catch((err) => {
           if (err.isAxiosError && err.response.status === 409) {
             actions.setFieldError('confirmPassword', 'Такой пользователь уже существует');

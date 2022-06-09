@@ -10,4 +10,8 @@ export default {
   getData: () => [host, prefix, 'data'].join('/'),
   sendLogin: () => [host, prefix, 'login'].join('/'),
   sendSignup: () => [host, prefix, 'signup'].join('/'),
+  home: '/',
+  login: '/login',
+  signup: '/signup',
+  noMatch: '*',
 };

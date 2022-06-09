@@ -2,7 +2,8 @@ import 'core-js/stable/index.js';
 import 'regenerator-runtime/runtime.js';
 
 import '../assets/application.scss';
-import runApp from './components/App.jsx';
+import ReactDOM from 'react-dom/client';
+import runApp from './init.jsx';
 
 if (process.env.NODE_ENV !== 'production') {
   localStorage.debug = 'chat:*';
@@ -11,4 +12,6 @@ if (process.env.NODE_ENV !== 'production') {
 document.querySelector('body').classList.add('bg-light');
 const container = document.querySelector('#chat');
 
-runApp(container);
+const root = ReactDOM.createRoot(container);
+
+root.render(runApp());
