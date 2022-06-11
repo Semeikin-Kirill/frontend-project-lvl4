@@ -15,17 +15,20 @@ const channelsSlice = createSlice({
   initialState,
   reducers: {
     currentСhannelChanged(state, action) {
-      state.currentChannelId = action.payload;
+      const nextState = state;
+      nextState.currentChannelId = action.payload;
     },
     channelAdded(state, action) {
       const channel = action.payload;
-      state.channels = [...state.channels, channel];
-      state.currentChannelId = channel.id;
+      const nextState = state;
+      nextState.channels = [...state.channels, channel];
+      nextState.currentChannelId = channel.id;
     },
     removedChannel(state, action) {
       const { id } = action.payload;
-      state.channels = state.channels.filter((channel) => channel.id !== id);
-      state.currentChannelId = state.currentChannelId === id ? 1 : state.currentChannelId;
+      const nextState = state;
+      nextState.channels = state.channels.filter((channel) => channel.id !== id);
+      nextState.currentChannelId = state.currentChannelId === id ? 1 : state.currentChannelId;
     },
     renamedChannel(state, action) {
       const { id: channelId, name } = action.payload;
@@ -36,8 +39,9 @@ const channelsSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(fetchData.fulfilled, (state, action) => {
       const { channels, currentChannelId } = action.payload;
-      state.channels = channels;
-      state.currentChannelId = currentChannelId;
+      const nextState = state;
+      nextState.channels = channels;
+      nextState.currentChannelId = currentChannelId;
     });
   },
 });

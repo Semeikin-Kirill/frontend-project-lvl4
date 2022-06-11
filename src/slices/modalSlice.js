@@ -8,14 +8,16 @@ const modalSlice = createSlice({
   reducers: {
     shownModal(state, action) {
       const { type, isOpen, extra } = action.payload;
-      state.type = type;
-      state.isOpen = isOpen;
-      state.extra = extra;
+      const nextState = state;
+      nextState.type = type;
+      nextState.isOpen = isOpen;
+      nextState.extra = extra;
     },
     closedModal(state) {
-      state.isOpen = false;
-      state.type = null;
-      state.extra = null;
+      const nextState = state;
+      nextState.isOpen = false;
+      nextState.type = null;
+      nextState.extra = null;
     },
   },
 });

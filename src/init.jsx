@@ -4,6 +4,7 @@ import { i18nextPlugin } from 'translation-check';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import React from 'react';
+import { Provider as ProviderRollbar, ErrorBoundary } from '@rollbar/react';
 import ru from './locales/ru.js';
 import socketClient from './api/index.js';
 import store from './slices/index.js';
@@ -11,6 +12,11 @@ import { SocketContext } from './contexts/index.jsx';
 import App from './components/App.jsx';
 
 export default function init() {
+  const rollbarConfig = {
+    accessToken: process.env.TOKEN,
+    payload: 'production',
+  };
+
   const i18nextInstance = i18n.createInstance();
 
   i18nextInstance.use(i18nextPlugin).use(initReactI18next).init({
@@ -32,14 +38,18 @@ export default function init() {
   socket.getRenameChannel(store.dispatch);
 
   return (
-    <BrowserRouter>
-      <Provider store={store}>
-        <I18nextProvider i18n={i18nextInstance}>
-          <SocketContext.Provider value={socket}>
-            <App />
-          </SocketContext.Provider>
-        </I18nextProvider>
-      </Provider>
-    </BrowserRouter>
+    <ProviderRollbar config={rollbarConfig}>
+      <ErrorBoundary>
+        <BrowserRouter>
+          <Provider store={store}>
+            <I18nextProvider i18n={i18nextInstance}>
+              <SocketContext.Provider value={socket}>
+                <App />
+              </SocketContext.Provider>
+            </I18nextProvider>
+          </Provider>
+        </BrowserRouter>
+      </ErrorBoundary>
+    </ProviderRollbar>
   );
 }

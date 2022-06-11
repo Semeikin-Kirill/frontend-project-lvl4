@@ -1,1 +1,0 @@
-{"buildTargets":["build","deploy","install","install-deps","lint","publish","start","start-backend","start-frontend","test"],"launchTargets":[],"customConfigurationProvider":{"workspaceBrowse":{"browsePath":[],"compilerArgs":[]},"fileIndex":[]}}

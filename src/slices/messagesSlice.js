@@ -11,20 +11,23 @@ const messagesSlice = createSlice({
     messageAdded: (state, action) => {
       const message = action.payload;
       const { channel } = message;
-      state[channel] = has(state, channel) ? [...state[channel], message] : [message];
+      const nextState = state;
+      nextState[channel] = has(state, channel) ? [...state[channel], message] : [message];
     },
   },
   extraReducers: (builder) => {
     builder.addCase(fetchData.fulfilled, (state, action) => {
       const { messages } = action.payload;
+      const nextState = state;
       messages.forEach((message) => {
         const { channel } = message;
-        state[channel] = has(state, channel) ? [...state[channel], message] : [message];
+        nextState[channel] = has(state, channel) ? [...state[channel], message] : [message];
       });
     })
       .addCase(removedChannel, (state, action) => {
+        const nextState = state;
         const { id } = action.payload;
-        delete state[id];
+        delete nextState[id];
       });
   },
 });
