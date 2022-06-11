@@ -17,7 +17,7 @@ export default {
     messages: 'сообщения',
     renameChannel: 'Канал переименован',
     createChannel: 'Канал создан',
-    deleteChannel: 'Канал удален',
+    deleteChannel: 'Канал удалён',
     forms: {
       login: {
         imgLogin: 'Войти',
