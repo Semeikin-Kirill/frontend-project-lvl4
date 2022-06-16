@@ -1,6 +1,4 @@
 import { io } from 'socket.io-client';
-import { channelAdded, removedChannel, renamedChannel } from '../slices/channelsSlice.js';
-import { messageAdded } from '../slices/messagesSlice.js';
 
 export default () => {
   const socket = io();
@@ -15,12 +13,12 @@ export default () => {
 
   return {
     sendMessage: createSocketOperation('newMessage'),
-    getMessage: (dispatch) => socket.on('newMessage', (message) => dispatch(messageAdded(message))),
+    getMessage: (cb) => socket.on('newMessage', cb),
     createChannel: createSocketOperation('newChannel'),
-    getChannel: (dispatch) => socket.on('newChannel', (channel) => dispatch(channelAdded(channel))),
+    getChannel: (cb) => socket.on('newChannel', cb),
     removeChannel: createSocketOperation('removeChannel'),
-    getRemoveChannel: (dispatch) => socket.on('removeChannel', (id) => dispatch(removedChannel(id))),
+    getRemoveChannel: (cb) => socket.on('removeChannel', cb),
     renameChannel: createSocketOperation('renameChannel'),
-    getRenameChannel: (dispatch) => socket.on('renameChannel', (channel) => dispatch(renamedChannel(channel))),
+    getRenameChannel: (cb) => socket.on('renameChannel', cb),
   };
 };

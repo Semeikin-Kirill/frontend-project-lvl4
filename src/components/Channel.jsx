@@ -14,9 +14,9 @@ function Channel({
 
   const changedCurrentChannel = (channelId) => () => dispatch(currentСhannelChanged(channelId));
 
-  const clickRemove = () => dispatch(shownModal({ isOpen: true, type: 'removeChannel', extra: { id } }));
+  const clickRemove = () => dispatch(shownModal({ type: 'removeChannel', extra: { id } }));
 
-  const clickRename = () => dispatch(shownModal({ isOpen: true, type: 'renameChannel', extra: { id, name } }));
+  const clickRename = () => dispatch(shownModal({ type: 'renameChannel', extra: { id, name } }));
 
   const classnames = cn('w-100', 'rounded-0', 'text-start', 'btn', { 'btn-secondary': id === currentChannelId });
   if (removable) {
@@ -24,7 +24,7 @@ function Channel({
       <li className="nav-item w-100">
         <Dropdown as={ButtonGroup} className="d-flex">
           <button type="button" className={`text-truncate ${classnames}`} onClick={changedCurrentChannel(id)}>
-            <span className="me-1">#</span>
+            <span className="me-1">{t('prefix')}</span>
             {name}
           </button>
           <Dropdown.Toggle className="flex-grow-0" split variant={currentChannelId === id ? 'secondary' : ''}>
@@ -41,7 +41,7 @@ function Channel({
   return (
     <li key={id} className="nav-item w-100">
       <button type="button" className={classnames} onClick={changedCurrentChannel(id)}>
-        <span className="me-1">#</span>
+        <span className="me-1">{t('buttons.channel')}</span>
         {name}
       </button>
     </li>

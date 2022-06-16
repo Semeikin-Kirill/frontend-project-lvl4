@@ -1,13 +1,15 @@
 export default {
   translation: {
+    prefix: '#',
     noMatch: 'Страница не найдена',
-    linkHome: 'Но вы можете перейти <2>на главную страницу</2>',
-    noAccount: '<0>Нет аккаунта?</0> <1>Регистрация</1>',
+    linkHome: 'на главную страницу',
+    transition: 'Но вы можете перейти ',
+    noAccount: 'Нет аккаунта? ',
+    registration: 'Регистрация',
     brand: 'Hexlet Chat',
     linkSingup: '',
     channels: 'Каналы',
     channelManagement: 'Управление каналом',
-    channelName: '# {{name}}',
     messagesCount_zero: '{{count}} сообщений',
     messagesCount_one: '{{count}} сообщение',
     messagesCount_few: '{{count}} сообщения',
@@ -42,12 +44,18 @@ export default {
     errors: {
       login: {
         incorrect: 'Неверные имя пользователя или пароль',
+        required: 'Обязательное поле',
+      },
+      message: {
+        minSize: 'Минимум один символ',
+        required: 'Обязательное поле',
       },
       signup: {
         required: 'Обязательное поле',
         sizeUsername: 'От 3 до 20 символов',
         sizePassword: 'Не менее 6 символов',
         userExists: 'Такой пользователь уже существует',
+        mustMatch: 'Пароли должны совпадать',
       },
       addChannel: {
         size: 'От 3 до 20 символов',
@@ -67,6 +75,7 @@ export default {
       delete: 'Удалить',
       send: 'Отправить',
       add: '+',
+      channel: '#',
     },
     modals: {
       addChannel: {

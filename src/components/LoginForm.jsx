@@ -14,7 +14,7 @@ import routes from '../routes.js';
 function LoginForm() {
   const inputEl = useRef(null);
   const [authFailed, setAuthFailed] = useState(false);
-  const { logIn } = useAuth();
+  const { logIn, setUserId } = useAuth();
   const navigate = useNavigate();
   const { t } = useTranslation();
 
@@ -29,14 +29,14 @@ function LoginForm() {
         password: '',
       }}
       validationSchema={Yup.object({
-        username: Yup.string().required('Required'),
-        password: Yup.string().required('Required'),
+        username: Yup.string().required('errors.login.required'),
+        password: Yup.string().required('errors.login.required'),
       })}
       onSubmit={(values) => {
         setAuthFailed(false);
         axios.post(routes.sendLogin(), values)
           .then(({ data }) => {
-            localStorage.setItem('userId', JSON.stringify(data));
+            setUserId(data);
             logIn();
             navigate('/');
           }).catch((err) => {

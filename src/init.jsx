@@ -6,10 +6,12 @@ import { Provider } from 'react-redux';
 import React from 'react';
 import { Provider as ProviderRollbar, ErrorBoundary } from '@rollbar/react';
 import ru from './locales/ru.js';
-import socketClient from './api/index.js';
+import getApi from './api/index.js';
 import store from './slices/index.js';
-import { SocketContext } from './contexts/index.jsx';
+import { ChatApiContext } from './contexts/index.jsx';
 import App from './components/App.jsx';
+import { messageAdded } from './slices/messagesSlice.js';
+import { channelAdded, removedChannel, renamedChannel } from './slices/channelsSlice.js';
 
 export default function init() {
   const rollbarConfig = {
@@ -30,12 +32,12 @@ export default function init() {
     },
   });
 
-  const socket = socketClient();
+  const api = getApi();
 
-  socket.getMessage(store.dispatch);
-  socket.getChannel(store.dispatch);
-  socket.getRemoveChannel(store.dispatch);
-  socket.getRenameChannel(store.dispatch);
+  api.getMessage((message) => store.dispatch(messageAdded(message)));
+  api.getChannel((channel) => store.dispatch(channelAdded(channel)));
+  api.getRemoveChannel((id) => store.dispatch(removedChannel(id)));
+  api.getRenameChannel((channel) => store.dispatch(renamedChannel(channel)));
 
   return (
     <ProviderRollbar config={rollbarConfig}>
@@ -43,9 +45,9 @@ export default function init() {
         <BrowserRouter>
           <Provider store={store}>
             <I18nextProvider i18n={i18nextInstance}>
-              <SocketContext.Provider value={socket}>
+              <ChatApiContext.Provider value={api}>
                 <App />
-              </SocketContext.Provider>
+              </ChatApiContext.Provider>
             </I18nextProvider>
           </Provider>
         </BrowserRouter>

@@ -17,6 +17,10 @@ import routes from '../routes.js';
 function AuthProvider({ children }) {
   const [loggedIn, setLoggedIn] = useState(has(localStorage, 'userId'));
 
+  const getUserName = () => {
+    const { username } = JSON.parse(localStorage.getItem('userId'));
+    return username;
+  };
   const logIn = () => setLoggedIn(true);
   const logOut = () => {
     localStorage.removeItem('userId');
@@ -31,8 +35,9 @@ function AuthProvider({ children }) {
 
     return {};
   };
+  const setUserId = (data) => localStorage.setItem('userId', JSON.stringify(data));
   const login = useMemo(() => ({
-    loggedIn, logIn, logOut, getAuthHeader,
+    loggedIn, logIn, logOut, getAuthHeader, getUserName, setUserId,
   }), [loggedIn]);
 
   return (

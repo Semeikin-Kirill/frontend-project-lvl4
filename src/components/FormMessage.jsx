@@ -4,12 +4,12 @@ import { FormControl, InputGroup } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import * as Yup from 'yup';
-import { useSocket } from '../hooks/index.jsx';
+import { useAuth, useChatApi } from '../hooks/index.jsx';
 
 function FormMessage() {
   const { currentChannelId } = useSelector((state) => state.channels);
-  const { username } = JSON.parse(localStorage.getItem('userId'));
-  const socket = useSocket();
+  const { getUserName } = useAuth();
+  const chatApi = useChatApi();
   const inputEl = useRef(null);
   const { t } = useTranslation();
   useEffect(() => {
@@ -20,9 +20,9 @@ function FormMessage() {
     <div className="mt-auto px-5 py-3">
       <Formik
         initialValues={{ body: '' }}
-        validationSchema={Yup.object({ body: Yup.string().trim().min(1, 'Min 1').required('required') })}
+        validationSchema={Yup.object({ body: Yup.string().trim().min(1, 'errors.message.minSize').required('errors.message.required') })}
         onSubmit={({ body }, { setSubmitting, resetForm }) => {
-          socket.sendMessage({ message: body, channel: currentChannelId, author: username });
+          chatApi.sendMessage({ message: body, channel: currentChannelId, author: getUserName() });
           resetForm();
           setSubmitting(false);
           inputEl.current.focus();

@@ -5,7 +5,7 @@ import routes from '../routes.js';
 
 export const fetchData = createAsyncThunk(
   'data/fetchData',
-  (header) => axios.get(routes.getData(), header).then((req) => req.data).catch(() => toast.error('Ошибка при загрузке данных')),
+  (header) => axios.get(routes.getData(), header).then((req) => req.data).catch(() => toast.error('Error when loading data')),
 );
 
 const initialState = { currentChannelId: null, channels: [] };

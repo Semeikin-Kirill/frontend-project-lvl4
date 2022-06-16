@@ -20,7 +20,7 @@ function Messages() {
       <div className="d-flex flex-column h-100">
         <div className="bg-light mb-4 p-3 shadow-sm small">
           <p className="m-0">
-            <b>{t('channelName', { name })}</b>
+            <b>{`${t('prefix')} ${name}`}</b>
           </p>
           <span className="text-muted">{t('messagesCount', { count })}</span>
         </div>

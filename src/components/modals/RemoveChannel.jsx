@@ -3,11 +3,11 @@ import { Button, Modal } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
-import { useSocket } from '../../hooks/index.jsx';
+import { useChatApi } from '../../hooks/index.jsx';
 import { closedModal, selectorModal } from '../../slices/modalSlice.js';
 
 function RemoveChannel() {
-  const socket = useSocket();
+  const chatApi = useChatApi();
   const { isOpen, type, extra } = useSelector(selectorModal);
   const dispatch = useDispatch();
   const { t } = useTranslation();
@@ -15,7 +15,7 @@ function RemoveChannel() {
   const handleClose = () => dispatch(closedModal());
 
   const handleRemove = () => {
-    socket.removeChannel(extra);
+    chatApi.removeChannel(extra);
     handleClose();
     toast.success(t('deleteChannel'));
   };
